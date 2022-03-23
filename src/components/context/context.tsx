@@ -28,8 +28,10 @@ type Data = {
   setCidadeSelecionada: (cidadeSelecionada: string) => void;
   city?: City;
   setCity: (city: City) => void;
-  citySelected: boolean;
-  setCitySelected: (citySeletec: boolean) => void;
+  routes: any;
+  setRoutes: any;
+  //citySelected: boolean;
+  //setCitySelected: (citySeletec: boolean) => void;
 }
 
 
@@ -54,7 +56,8 @@ export function ContextProvider({ children }: DataContextProviderProps) {
   const [cidades, setCidades] = useState<City[]>([]);
   const [cidadeSelecionada, setCidadeSelecionada] = useState<string>('');
   const [city, setCity] = useState<City | undefined>()
-  const [citySelected, setCitySelected] = useState<boolean>(false)
+  /* const [citySelected, setCitySelected] = useState<boolean>(false) */
+  const [routes, setRoutes] = useState<any>();
 
 
   useEffect(() => {
@@ -85,8 +88,10 @@ export function ContextProvider({ children }: DataContextProviderProps) {
         setCidadeSelecionada,
         city,
         setCity,
-        citySelected,
-        setCitySelected
+        /* citySelected,
+        setCitySelected */
+        routes,
+        setRoutes
       }}
     >
       {children}

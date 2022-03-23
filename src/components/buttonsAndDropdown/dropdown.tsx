@@ -61,7 +61,8 @@ export function Dropdown2() {
     cidadeSelecionada,
     setCidadeSelecionada,
     city,
-    setCity
+    setCity,
+    /* setCitySelected */
   } = useData()
 
   console.log('xx',city);
@@ -71,6 +72,8 @@ export function Dropdown2() {
     setCidadeSelecionada(state);
     //city recebe o objeto selecionado
     setCity(cityObj);
+
+    /* setCitySelected(true); */
   }
 
   return (
@@ -107,7 +110,7 @@ export function Dropdown2() {
         })}
 
       </ul>   {/* se city existir */}
-      <button onClick={() => console.log(city?.lat)}>teste</button>
+      <button onClick={() => console.log(process.env.MAPBOX_TOKEN)}>teste</button>
     </div>
   )
 }
