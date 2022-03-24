@@ -7,7 +7,7 @@ import styles from './styles.module.scss'
 
 
 import { useData } from '../context/context';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import RoutingMachine from './routingMachine';
 
@@ -18,20 +18,16 @@ export default function Map() {
 
   const machineRef = useRef();//aki usará como ref O ponto do 
 
-  const [destiny, setDestiny] = useState({
-    lat: 0,
-    lng: 0
-  });
-  const [userPosition, setUserPosition] = useState({
-    lat: 0,
-    lng: 0
-  });
-
 
 
   const {
     city,//objeto contendo dados de latlng e nome da cidade
     /* citySelected */
+    position,
+    setPosition,
+    destiny,
+    setDestiny,
+    cidade
   } = useData();
 
 
@@ -44,22 +40,20 @@ export default function Map() {
     return null;
   }
 
-  function OnClick() {
-    /* const map = useMapEvent('click', () => {
-      map.on('click', (e) => {
 
-        //console.log(e.target._latlng);
-        console.log('latlng', e.latlng);
-        console.log(e);
-      })
-    }); */
-    const mape = useMapEvents({
-      click: () => {
-        mape.on('click', (e) => {
-          console.log('latlng', e.latlng);
-        })
-      }
-    })
+
+  function OnClick() {
+
+    if (cidade) {//se cidade estiver selecionada entao ele poderá selecionar os pontos
+      const map = useMapEvents({
+        click: () => {
+          map.on('click', (e) => {
+            setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
+            console.log('latlng', position);
+          })
+        }
+      });
+    }
 
     return null;
   }

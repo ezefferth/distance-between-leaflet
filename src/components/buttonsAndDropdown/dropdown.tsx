@@ -1,6 +1,5 @@
 
-//import { estados } from "../data/estados";
-import { useState } from 'react';
+//import { useState } from 'react';
 import { City, useData } from '../context/context';
 
 import styles from './dropdown.module.scss'
@@ -12,6 +11,8 @@ export function Dropdown() {
     estados,
     estado,
     setEstado,
+    setCidadeSelecionada,
+    
   } = useData();
 
 
@@ -20,6 +21,7 @@ export function Dropdown() {
 
   function handleDropdown(state: string) {
     setEstado(state)
+    setCidadeSelecionada('');
   }
   return (
     <div className='dropdown'>
@@ -58,20 +60,25 @@ export function Dropdown() {
 export function Dropdown2() {
   const {
     cidades,
-    cidadeSelecionada,
-    setCidadeSelecionada,
+    cidade,
+    setCidade,
     city,
     setCity,
+    setCidadeSelecionada,
+    position,//so para console log
     /* setCitySelected */
   } = useData()
 
-  console.log('xx',city);
+  console.log('xx', city);
 
   function handleDropdown(state: string, cityObj: City) {//tipo exportado do context
     //cidade recebe o nome selecionado
-    setCidadeSelecionada(state);
+    setCidade(state);
     //city recebe o objeto selecionado
     setCity(cityObj);
+    //cidade selecionada sendo diferente da cidade, para usar no header
+    setCidadeSelecionada(state);//no header a cada mudança do estado, troca o <p> do titulo
+    //quando estado muda cidadeSelecionada eh '', ai troca o titulo para selecionar a cidade
 
     /* setCitySelected(true); */
   }
@@ -87,14 +94,14 @@ export function Dropdown2() {
       >
         {/* condicional se o estado(q vem do context) estiver maior que 0 
         quer dizer que ele foi selecionado*/}
-        {cidadeSelecionada.length > 0 ? (
-          cidadeSelecionada
+        {cidade.length > 0 ? (
+          cidade
         ) : (
           'Cidade'
         )}
       </a>
       <ul className="dropdown-menu">
-        
+
         {/* coomo o cidades eh um array de objetos, entao... */}
         {cidades.map((cidade, index) => {
           /* console.log('city', cidade.name) */
@@ -110,7 +117,7 @@ export function Dropdown2() {
         })}
 
       </ul>   {/* se city existir */}
-      <button onClick={() => console.log(process.env.MAPBOX_TOKEN)}>teste</button>
+      <button onClick={() => console.log('position', position)}>teste</button>
     </div>
   )
 }

@@ -23,10 +23,12 @@ const createRoutineMachineLayer = (props: any) => {
   //rotas que vem de context
   const { setRoutes } = useData();
 
+  /* oque vem das props, os dados de lat,lng start e end points */
   const { waypoints } = props;
   const instance = L.Routing.control({
     waypoints,
     lineOptions: {
+      /* cor e largura da line */
       styles: [{ color: "#6FA1EC", weight: 4 }],
       extendToWaypoints: false,
       missingRouteTolerance: 0,

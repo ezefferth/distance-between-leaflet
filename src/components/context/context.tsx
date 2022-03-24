@@ -15,6 +15,10 @@ export type City = {
   lng: number
 }
 
+type LatLng = {
+  lat: number,
+  lng: number
+}
 
 //typagem da estrutura do context
 type Data = {
@@ -30,6 +34,10 @@ type Data = {
   setCity: (city: City) => void;
   routes: any;
   setRoutes: any;
+  destiny: LatLng;
+  setDestiny: (destiny: LatLng) => void;
+  position: LatLng;
+  setPosition: (userPosition: LatLng) => void;
   //citySelected: boolean;
   //setCitySelected: (citySeletec: boolean) => void;
 }
@@ -59,7 +67,24 @@ export function ContextProvider({ children }: DataContextProviderProps) {
   /* const [citySelected, setCitySelected] = useState<boolean>(false) */
   const [routes, setRoutes] = useState<any>();
 
+  
 
+  //destino do usuário
+  const [destiny, setDestiny] = useState<LatLng>({
+    lat: 0,
+    lng: 0
+  });
+  //position do usuario
+  const [position, setPosition] = useState<LatLng>({
+    lat: 0,
+    lng: 0
+  });
+
+
+  //const []
+
+
+  /* useEffect qnd se altera o estado, ele recebe as cidades */
   useEffect(() => {
     //console.log(MTcities);
     if (estado === 'MT') {
@@ -91,7 +116,11 @@ export function ContextProvider({ children }: DataContextProviderProps) {
         /* citySelected,
         setCitySelected */
         routes,
-        setRoutes
+        setRoutes,
+        destiny,
+        setDestiny,
+        position,
+        setPosition
       }}
     >
       {children}
