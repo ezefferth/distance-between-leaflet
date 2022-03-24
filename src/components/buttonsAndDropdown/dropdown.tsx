@@ -1,6 +1,6 @@
 
 //import { useState } from 'react';
-import { City, useData } from '../context/context';
+import { City, States, useData } from '../context/context';
 
 import styles from './dropdown.module.scss'
 
@@ -12,15 +12,28 @@ export function Dropdown() {
     estado,
     setEstado,
     setCidadeSelecionada,
-    
+    setState,
+    setCity,
+    setCidade
+
   } = useData();
 
 
 
 
 
-  function handleDropdown(state: string) {
-    setEstado(state)
+  function handleDropdown(stateObj: States) {
+    setEstado(stateObj.name);
+    setState(stateObj);
+
+    //quando troca de estado altera os dados da cidade
+    setCity({
+      name: '',
+      lat: 0,
+      lng: 0
+    });
+    setCidade('');
+
     setCidadeSelecionada('');
   }
   return (
@@ -41,14 +54,15 @@ export function Dropdown() {
         )}
       </a>
       <ul className="dropdown-menu">
-        {estados.map(estado => {
-          return (<li key={estado} >
-            <button
-              className="dropdown-item"
-              onClick={() => handleDropdown(estado)}
-            >{estado}</button>
+        {estados.map((estado, index) => {
+          return (
+            <li key={index} >
+              <button
+                className="dropdown-item"
+                onClick={() => handleDropdown(estado)}
+              >{estado.name}</button>
 
-          </li>
+            </li>
           )
         })}
 
@@ -62,14 +76,13 @@ export function Dropdown2() {
     cidades,
     cidade,
     setCidade,
-    city,
     setCity,
     setCidadeSelecionada,
     position,//so para console log
     /* setCitySelected */
+    checkFrom
   } = useData()
 
-  console.log('xx', city);
 
   function handleDropdown(state: string, cityObj: City) {//tipo exportado do context
     //cidade recebe o nome selecionado
@@ -117,7 +130,7 @@ export function Dropdown2() {
         })}
 
       </ul>   {/* se city existir */}
-      <button onClick={() => console.log('position', position)}>teste</button>
+      <button onClick={() => console.log('position', checkFrom)}>teste</button>
     </div>
   )
 }

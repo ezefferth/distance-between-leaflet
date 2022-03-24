@@ -14,6 +14,11 @@ export type City = {
   lat: number,
   lng: number
 }
+export type States = {
+  name: string,
+  lat: number,
+  lng: number
+}
 
 type LatLng = {
   lat: number,
@@ -22,7 +27,7 @@ type LatLng = {
 
 //typagem da estrutura do context
 type Data = {
-  estados: Array<string>;
+  estados: States[];
   estado: string;
   setEstado: (estado: string) => void;
   cidade: string;
@@ -32,6 +37,8 @@ type Data = {
   setCidadeSelecionada: (cidadeSelecionada: string) => void;
   city?: City;
   setCity: (city: City) => void;
+  state?: States;
+  setState: (state: States) => void;
   routes: any;
   setRoutes: any;
   destiny: LatLng;
@@ -40,6 +47,13 @@ type Data = {
   setPosition: (userPosition: LatLng) => void;
   //citySelected: boolean;
   //setCitySelected: (citySeletec: boolean) => void;
+  checkFrom: boolean;
+  setCheckFrom: (checkFrom: boolean) => void;
+  checkWhere: boolean;
+  setCheckWhere: (checkWhere: boolean) => void;
+  confirmedPosition: LatLng;
+   setConfirmedPosition: (confirmedPosition: LatLng) => void;
+
 }
 
 
@@ -55,19 +69,27 @@ type DataContextProviderProps = {
 
 export function ContextProvider({ children }: DataContextProviderProps) {
 
-  const estados = states.sort();
+  const estados = [...states];
 
+  //setEstados(states)
   //const cidades = MTcities;
 
-  const [estado, setEstado] = useState<string>('');
+  const [checkFrom, setCheckFrom] = useState<boolean>(false);
+  const [checkWhere, setCheckWhere] = useState<boolean>(false);
+
+
+
+
+  const [estado, setEstado] = useState<string>('');//qnd o estado eh selecionado
   const [cidade, setCidade] = useState<string>('');
-  const [cidades, setCidades] = useState<City[]>([]);
+  const [cidades, setCidades] = useState<City[]>([]);//vai receber as cidades a partir da selecao do estado
   const [cidadeSelecionada, setCidadeSelecionada] = useState<string>('');
   const [city, setCity] = useState<City | undefined>()
+  const [state, setState] = useState<States | undefined>();
   /* const [citySelected, setCitySelected] = useState<boolean>(false) */
   const [routes, setRoutes] = useState<any>();
 
-  
+
 
   //destino do usuário
   const [destiny, setDestiny] = useState<LatLng>({
@@ -76,6 +98,10 @@ export function ContextProvider({ children }: DataContextProviderProps) {
   });
   //position do usuario
   const [position, setPosition] = useState<LatLng>({
+    lat: 0,
+    lng: 0
+  });
+  const [confirmedPosition, setConfirmedPosition] = useState<LatLng>({
     lat: 0,
     lng: 0
   });
@@ -120,7 +146,15 @@ export function ContextProvider({ children }: DataContextProviderProps) {
         destiny,
         setDestiny,
         position,
-        setPosition
+        setPosition,
+        state,
+        setState,
+        checkFrom,
+        setCheckFrom,
+        checkWhere,
+        setCheckWhere,
+        confirmedPosition,
+        setConfirmedPosition
       }}
     >
       {children}
