@@ -5,16 +5,20 @@ import {
   Marker,
   Popup,
   useMap,
-  useMapEvents
+  useMapEvents,
+  LayersControl
 } from 'react-leaflet'
 import "leaflet";
-import L from 'leaflet';
+//import L from 'leaflet';
 
 
 import 'leaflet/dist/leaflet.css';
 //corrige o bug do icon nao aprecer
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
 import 'leaflet-defaulticon-compatibility';
+
+import 'leaflet-routing-machine';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 //-------------------------------------------
 
 import styles from './styles.module.scss'
@@ -24,6 +28,7 @@ import { useData } from '../context/context';
 import { useEffect, useRef } from 'react';
 
 import RoutingMachine from './routingMachine';
+import { set } from 'date-fns/esm';
 
 
 export default function Map() {
@@ -68,22 +73,21 @@ export default function Map() {
     return null;
   }
 
+  /* useEffect para adicionar origem confirmada pelo user */
   useEffect(() => {
-
     if (checkFrom) {//se for true
       setConfirmedPosition(position);
-      
-      
-
     }
     else if (!checkFrom) {
       setPosition(confirmedPosition);
-/*       setDestiny({ lat: 0, lng: 0 });
-      setConfirmedDestiny({ lat: 0, lng: 0 }); */
+      /*       setDestiny({ lat: 0, lng: 0 });
+            setConfirmedDestiny({ lat: 0, lng: 0 }); */
       setCheckWhere(false);
     }
+
   }, [checkFrom]);
 
+  /* useEffect para adicionar destino confirmado pelo user */
   useEffect(() => {
     if (checkWhere && checkFrom) {//se for true
       setConfirmedDestiny(destiny);
@@ -93,11 +97,20 @@ export default function Map() {
     }
   }, [checkWhere]);
 
+  /* atualiza a referencia do waypoints ao trocar de destino */
+  useEffect(() => {
+    if (machineRef.current) {
+      if (checkFrom && checkWhere && position.lat !== 0 && destiny.lat !== 0) {
+        machineRef.current.setWaypoints([[confirmedPosition.lat, confirmedPosition.lng], [confirmedDestiny.lat, confirmedDestiny.lng]]);
+      }
+    }
+
+  }, [destiny, checkWhere]);
 
 
 
+  /* recebe evento onClick */
   function OnClick() {
-
     if (cidade) {//se cidade estiver selecionada entao ele poderá selecionar os pontos
       const map = useMapEvents({
         click: () => {
@@ -112,10 +125,11 @@ export default function Map() {
         }
       });
     }
-
-
     return null;
   }
+
+  /* Baselayer para trocar de layer */
+  const { BaseLayer } = LayersControl;
 
   return (
     <div className={styles.leaflef}>
@@ -125,23 +139,37 @@ export default function Map() {
         zoom={4}
         style={{ width: "100vw", height: "80vh" }}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {
+        <LayersControl>
+          <BaseLayer checked name='Open Street Map'>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+          </BaseLayer>
+          <BaseLayer checked name='Open Street Map'>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+          </BaseLayer>
+
+        </LayersControl>
+
+        {//se position for true e checkMarker
           position && checkFrom ? (
             <Marker
               position={[confirmedPosition.lat, confirmedPosition.lng]}
             >
               <Popup>Origem</Popup>
             </Marker>
-          ) : (
-            <Marker
-              position={[position.lat, position.lng]}
-            >
-              <Popup>Origem</Popup>
-            </Marker>
+          ) : (//se nao
+            position.lat !== 0 && (
+              <Marker
+                position={[position.lat, position.lng]}
+              >
+                <Popup>Origem</Popup>
+              </Marker>
+            )
           )
         }
 
@@ -164,10 +192,17 @@ export default function Map() {
 
           )
         }
+
+        {
+          confirmedPosition.lat !== 0 && destiny.lat !== 0 &&
+          <RoutingMachine
+            ref={machineRef}
+            waypoints={[[confirmedPosition.lat, confirmedPosition.lng], [destiny.lat, destiny.lng]]}
+          />
+        }
         <FlyTo />
 
         <OnClick />
-        <RoutingMachine />
       </MapContainer>
     </div>
 

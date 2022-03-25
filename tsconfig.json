@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/buttonsAndDropdown/dropdown.jsx", "src/components/map/routingMachine.tsx", "src/components/map/map.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/buttonsAndDropdown/dropdown.jsx", "src/components/map/routingMachine.jsx", "src/components/map/map.jsx"],
   "exclude": ["node_modules"]
 }

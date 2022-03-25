@@ -8,7 +8,7 @@ import { useData } from '../context/context'
 
 
 
-const createRoutineMachineLayer = (props: any) => {
+const createRoutineMachineLayer = (props) => {
 
   //dotenv.config(); dont need this fow while
   /* const options = { profile: "mapbox/walking", polylinePrecision: 6 }; */
@@ -18,10 +18,12 @@ const createRoutineMachineLayer = (props: any) => {
    vc pode forçar, colocando !
   mas é bom colocar algum valor alternativo,  ?? ''
   */
-  const token: string = process.env.MAPBOX_TOKEN ?? ''
+  //const token: string = process.env.MAPBOX_TOKEN ?? ''
+
+  const token = process.env.MAPBOX_TOKEN;
 
   //rotas que vem de context
-  const { setRoutes } = useData();
+  const { setRoutes, setRoutes2 } = useData();
 
   /* oque vem das props, os dados de lat,lng start e end points */
   const { waypoints } = props;
@@ -30,8 +32,8 @@ const createRoutineMachineLayer = (props: any) => {
     lineOptions: {
       /* cor e largura da line */
       styles: [{ color: "#6FA1EC", weight: 4 }],
-      extendToWaypoints: false,
-      missingRouteTolerance: 0,
+      //extendToWaypoints: false,
+      //missingRouteTolerance: 0,
     },
     show: false,
     //addWaypoints: false,
@@ -47,7 +49,8 @@ const createRoutineMachineLayer = (props: any) => {
   instance.on('routesfound', function (e) {
     const routes = e.routes;
 
-    setRoutes(routes[0].summary)
+    setRoutes2(routes);
+    setRoutes(routes[0].summary);
 
   });
   //instance.hide();

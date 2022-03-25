@@ -78,9 +78,13 @@ export function Dropdown2() {
     setCidade,
     setCity,
     setCidadeSelecionada,
-    position,//so para console log
+    position,
     /* setCitySelected */
-    checkFrom
+    //checkFrom
+    routes,
+    distanceRoutes,
+    timingRoutes,
+    routes2
   } = useData()
 
 
@@ -130,7 +134,7 @@ export function Dropdown2() {
         })}
 
       </ul>   {/* se city existir */}
-      <button onClick={() => console.log('position', position)}>teste</button>
+      <button onClick={() => console.log('position', routes2, 'timing', timingRoutes, 'distance',distanceRoutes)}>teste</button>
     </div>
   )
 }

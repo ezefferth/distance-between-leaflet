@@ -9,6 +9,19 @@
   align-items: center;
   color: whitesmoke;
 
+  .distTime{
+    position:fixed;
+    //text-align: right;
+    //display: block;
+    //text-align: right;
+    float: right;
+    //bottom: 1rem;
+    //argin-left: auto;
+    right: 1rem;
+    text-align: right;
+    margin-top: 0.2rem;
+  }
+
   h1 {
   // display: flex;
   //position: relative;

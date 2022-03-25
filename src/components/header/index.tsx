@@ -33,6 +33,8 @@ export function Header() {
     checkWhere,
     setCheckWhere,
     destiny,
+    distanceRoutes,
+    timingRoutes,
 
   } = useData();
 
@@ -41,6 +43,11 @@ export function Header() {
     <header className={styles.headerContainer}>
 
       <h1>Distance Between</h1>
+
+      <div className={styles.distTime}>
+        {distanceRoutes ? (<p>Distância: {distanceRoutes} km</p>) : ('')}
+        {timingRoutes ? (<p>Tempo: {timingRoutes }min</p>) : ('')}
+      </div>
 
       <div className={styles.localeDiv}>
         <p>Onde você está
@@ -151,9 +158,9 @@ export function Header() {
                         'Selecione o Destino'
                       ) : (
                         'Confirmar'
-                      )                   
+                      )
                     )
-                  }
+                    }
                   </Tooltip>
                 }
               >
@@ -197,7 +204,7 @@ export function Header() {
 
       {
         estado ? //se estados for true
-          (cidadeSelecionada ? (<p>Selecione dois pontos</p>) : //estados sendo true e cidades sendo true 
+          (cidadeSelecionada ? (<p>Selecione origem e destino</p>) : //estados sendo true e cidades sendo true 
             (<p>Selecione o cidade que você está</p>)) ://se estados sendo true e cidades false
           (<p>Selecione o estado que você está</p>)//se estados sendo false
       }

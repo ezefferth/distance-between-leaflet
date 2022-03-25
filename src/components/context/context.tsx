@@ -41,6 +41,8 @@ type Data = {
   setState: (state: States) => void;
   routes: any;
   setRoutes: any;
+  routes2: any;
+  setRoutes2: any;
   destiny: LatLng;
   setDestiny: (destiny: LatLng) => void;
   position: LatLng;
@@ -55,6 +57,8 @@ type Data = {
   setConfirmedPosition: (confirmedPosition: LatLng) => void;
   confirmedDestiny: LatLng;
   setConfirmedDestiny: (confirmedPosition: LatLng) => void;
+  distanceRoutes: number;
+  timingRoutes: number
 
 }
 
@@ -83,15 +87,17 @@ export function ContextProvider({ children }: DataContextProviderProps) {
 
 
   const [estado, setEstado] = useState<string>('');//qnd o estado eh selecionado
-  const [cidade, setCidade] = useState<string>('');
+  const [cidade, setCidade] = useState<string>('');//recebe o nome da city
   const [cidades, setCidades] = useState<City[]>([]);//vai receber as cidades a partir da selecao do estado
   const [cidadeSelecionada, setCidadeSelecionada] = useState<string>('');
-  const [city, setCity] = useState<City | undefined>()
-  const [state, setState] = useState<States | undefined>();
+  const [city, setCity] = useState<City | undefined>()//guardara a lista dsa cidades
+  const [state, setState] = useState<States | undefined>();//recebe os estados
   /* const [citySelected, setCitySelected] = useState<boolean>(false) */
+
   const [routes, setRoutes] = useState<any>();
-
-
+  const [routes2, setRoutes2] = useState<any>();
+  const [distanceRoutes, setDistanceRoutes] = useState<any>(0);
+  const [timingRoutes, setTimingRoutes] = useState<any>(0);
 
   //destino do usuário
   const [destiny, setDestiny] = useState<LatLng>({
@@ -112,61 +118,77 @@ export function ContextProvider({ children }: DataContextProviderProps) {
     lng: 0
   });
 
-  //const []
-
-
-  /* useEffect qnd se altera o estado, ele recebe as cidades */
   useEffect(() => {
-    //console.log(MTcities);
-    if (estado === 'MT') {
-      setCidades(MTcities);
-    }
-    else if (estado === 'PR') {
-      setCidades(PRcities);
-    }
-    else if (estado === 'RO') {
-      setCidades(ROcities);
-    }
+    if (routes !== null && routes !== undefined) {
+      const distance: number = Number((routes.totalDistance / 1000));
+      const timing: number = Number (routes.totalTime / 60);
 
-  }, [estado])
+      /* const dist = typeof distance === 'number' ? distance.toFixed(2) : 0 */
+
+      setDistanceRoutes(distance.toFixed(2));
+    setTimingRoutes(timing.toFixed(0));
+    }
+  }, [routes]);
 
 
-  return (
-    <DataContext.Provider
-      value={{
-        estados,
-        estado,
-        setEstado,
-        cidade,
-        setCidade,
-        cidades,
-        cidadeSelecionada,
-        setCidadeSelecionada,
-        city,
-        setCity,
-        /* citySelected,
-        setCitySelected */
-        routes,
-        setRoutes,
-        destiny,
-        setDestiny,
-        position,
-        setPosition,
-        state,
-        setState,
-        checkFrom,
-        setCheckFrom,
-        checkWhere,
-        setCheckWhere,
-        confirmedPosition,
-        setConfirmedPosition,
-        confirmedDestiny,
-        setConfirmedDestiny
-      }}
-    >
-      {children}
-    </DataContext.Provider>
-  )
+//const []
+
+
+/* useEffect qnd se altera o estado, ele recebe as cidades */
+useEffect(() => {
+  //console.log(MTcities);
+  if (estado === 'MT') {
+    setCidades(MTcities);
+  }
+  else if (estado === 'PR') {
+    setCidades(PRcities);
+  }
+  else if (estado === 'RO') {
+    setCidades(ROcities);
+  }
+
+}, [estado])
+
+
+return (
+  <DataContext.Provider
+    value={{
+      estados, 
+      estado, //nome do estado selecionado
+      setEstado, 
+      cidade, //nome da cidade selecionada
+      setCidade,
+      cidades, //array de cidades
+      cidadeSelecionada,//cidade selecionada usada o <p> do header
+      setCidadeSelecionada,
+      city,// obj de cidade selecionada
+      setCity,
+      routes,//rota que vem do routingMachine
+      setRoutes,
+      destiny,// destino o user
+      setDestiny,
+      position,//posicao do user
+      setPosition,
+      state,//estado selecionado
+      setState,
+      checkFrom,//boolean do icone na header
+      setCheckFrom,
+      checkWhere,//boolean do icone na header
+      setCheckWhere,
+      confirmedPosition,//posicao confirmada origin
+      setConfirmedPosition,
+      confirmedDestiny, //posicao confirmada destino
+      setConfirmedDestiny,
+      distanceRoutes,//distancia da rota 
+      timingRoutes, //tempo de ida da rota
+
+      routes2,
+      setRoutes2
+    }}
+  >
+    {children}
+  </DataContext.Provider>
+)
 }
 
 
