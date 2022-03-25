@@ -32,7 +32,6 @@ export function Header() {
     confirmedPosition,
     checkWhere,
     setCheckWhere,
-    destiny,
 
   } = useData();
 
@@ -147,11 +146,7 @@ export function Header() {
                     {!checkFrom ? (
                       'Confirme a Origem'
                     ) : (
-                      destiny.lat === position.lat ? (
-                        'Selecione o Destino'
-                      ) : (
-                        'Confirmar'
-                      )                   
+                      'Confirmar'
                     )
                   }
                   </Tooltip>
@@ -160,7 +155,7 @@ export function Header() {
                 <button
                   className={checkFrom ? '' : styles.buttonsChecked}
                   type='button'
-                  disabled={!checkFrom && destiny.lat !== position.lat}
+                  disabled={!checkFrom}
                 >
                   <FaCheck
                     className={styles.buttonIcon}

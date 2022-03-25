@@ -1,12 +1,5 @@
 import 'leaflet/dist/leaflet.css';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMap,
-  useMapEvents
-} from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-leaflet'
 import "leaflet";
 import L from 'leaflet';
 
@@ -45,8 +38,7 @@ export default function Map() {
     confirmedPosition,
     checkWhere,
     setConfirmedDestiny,
-    confirmedDestiny,
-    setCheckWhere
+    confirmedDestiny
 
 
   } = useData();
@@ -69,26 +61,19 @@ export default function Map() {
   }
 
   useEffect(() => {
-
     if (checkFrom) {//se for true
       setConfirmedPosition(position);
-      
-      
-
     }
     else if (!checkFrom) {
-      setPosition(confirmedPosition);
-/*       setDestiny({ lat: 0, lng: 0 });
-      setConfirmedDestiny({ lat: 0, lng: 0 }); */
-      setCheckWhere(false);
+      setPosition(confirmedPosition)
     }
   }, [checkFrom]);
 
   useEffect(() => {
     if (checkWhere && checkFrom) {//se for true
-      setConfirmedDestiny(destiny);
+      setConfirmedDestiny(position);
     }
-    else if (!checkWhere && !checkFrom) {
+    else if (!checkWhere) {
       setDestiny(confirmedDestiny)
     }
   }, [checkWhere]);
@@ -106,8 +91,6 @@ export default function Map() {
             // pois latlng da um erro, mas funciona perfeitamente
             //@ts-ignore
             setPosition({ lat: e.latlng.lat, lng: e.latlng.lng });
-            //@ts-ignore
-            setDestiny({ lat: e.latlng.lat, lng: e.latlng.lng });
           });
         }
       });
@@ -134,34 +117,12 @@ export default function Map() {
             <Marker
               position={[confirmedPosition.lat, confirmedPosition.lng]}
             >
-              <Popup>Origem</Popup>
+
             </Marker>
           ) : (
             <Marker
               position={[position.lat, position.lng]}
-            >
-              <Popup>Origem</Popup>
-            </Marker>
-          )
-        }
-
-        {
-          destiny.lat !== 0 && checkFrom && checkWhere ? (
-            <Marker
-              position={[confirmedDestiny.lat, confirmedDestiny.lng]}
-            >
-              <Popup>Destino</Popup>
-            </Marker>
-          ) : (
-
-            destiny.lat !== 0 && (
-              <Marker
-                position={[destiny.lat, destiny.lng]}
-              >
-                <Popup>Destino</Popup>
-              </Marker>
-            )
-
+            ></Marker>
           )
         }
         <FlyTo />

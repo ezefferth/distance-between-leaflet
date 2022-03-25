@@ -45,8 +45,7 @@ export default function Map() {
     confirmedPosition,
     checkWhere,
     setConfirmedDestiny,
-    confirmedDestiny,
-    setCheckWhere
+    confirmedDestiny
 
 
   } = useData();
@@ -69,18 +68,14 @@ export default function Map() {
   }
 
   useEffect(() => {
-
     if (checkFrom) {//se for true
       setConfirmedPosition(position);
-      
-      
+      setDestiny({ lat: 0, lng: 0 });
+      setConfirmedDestiny({ lat: 0, lng: 0 });
 
     }
     else if (!checkFrom) {
-      setPosition(confirmedPosition);
-/*       setDestiny({ lat: 0, lng: 0 });
-      setConfirmedDestiny({ lat: 0, lng: 0 }); */
-      setCheckWhere(false);
+      setPosition(confirmedPosition)
     }
   }, [checkFrom]);
 
@@ -158,7 +153,7 @@ export default function Map() {
               <Marker
                 position={[destiny.lat, destiny.lng]}
               >
-                <Popup>Destino</Popup>
+                <Popup>DestinoO</Popup>
               </Marker>
             )
 

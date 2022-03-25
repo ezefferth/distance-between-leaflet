@@ -32,7 +32,6 @@ export function Header() {
     confirmedPosition,
     checkWhere,
     setCheckWhere,
-    destiny,
 
   } = useData();
 
@@ -117,7 +116,7 @@ export function Header() {
         {/* falta mexer aki, aonde vc quer ir...,
         e linkar com destiny */}
 
-        <p className={!checkFrom ? styles.confirmedP : ''}>Onde você quer ir
+        <p className={!confirmedPosition.lat ? styles.confirmedP : ''}>Onde você quer ir
           {confirmedPosition.lat && cidade ? (
             checkWhere ? ( //se sim checkWhere
               <OverlayTrigger
@@ -144,24 +143,11 @@ export function Header() {
                 delay={{ show: 200, hide: 300 }}
                 overlay={
                   <Tooltip id="button-tooltip">
-                    {!checkFrom ? (
-                      'Confirme a Origem'
-                    ) : (
-                      destiny.lat === position.lat ? (
-                        'Selecione o Destino'
-                      ) : (
-                        'Confirmar'
-                      )                   
-                    )
-                  }
+                    Confirmar
                   </Tooltip>
                 }
               >
-                <button
-                  className={checkFrom ? '' : styles.buttonsChecked}
-                  type='button'
-                  disabled={!checkFrom && destiny.lat !== position.lat}
-                >
+                <button className={styles.buttons} type='button'>
                   <FaCheck
                     className={styles.buttonIcon}
                     size={'1.25rem'}

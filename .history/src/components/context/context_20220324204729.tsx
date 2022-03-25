@@ -52,9 +52,7 @@ type Data = {
   checkWhere: boolean;
   setCheckWhere: (checkWhere: boolean) => void;
   confirmedPosition: LatLng;
-  setConfirmedPosition: (confirmedPosition: LatLng) => void;
-  confirmedDestiny: LatLng;
-  setConfirmedDestiny: (confirmedPosition: LatLng) => void;
+   setConfirmedPosition: (confirmedPosition: LatLng) => void;
 
 }
 
@@ -107,10 +105,7 @@ export function ContextProvider({ children }: DataContextProviderProps) {
     lat: 0,
     lng: 0
   });
-  const [confirmedDestiny, setConfirmedDestiny] = useState<LatLng>({
-    lat: 0,
-    lng: 0
-  });
+
 
   //const []
 
@@ -159,9 +154,7 @@ export function ContextProvider({ children }: DataContextProviderProps) {
         checkWhere,
         setCheckWhere,
         confirmedPosition,
-        setConfirmedPosition,
-        confirmedDestiny,
-        setConfirmedDestiny
+        setConfirmedPosition
       }}
     >
       {children}

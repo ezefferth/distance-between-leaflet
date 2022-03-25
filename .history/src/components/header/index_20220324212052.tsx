@@ -29,10 +29,7 @@ export function Header() {
     position,
     checkFrom,
     setCheckFrom,
-    confirmedPosition,
-    checkWhere,
-    setCheckWhere,
-    destiny,
+    confirmedPosition
 
   } = useData();
 
@@ -116,79 +113,35 @@ export function Header() {
         </p>
         {/* falta mexer aki, aonde vc quer ir...,
         e linkar com destiny */}
-
-        <p className={!checkFrom ? styles.confirmedP : ''}>Onde você quer ir
+        <p className={!confirmedPosition.lat ? styles.confirmedP : ''}>Onde você quer ir
           {confirmedPosition.lat && cidade ? (
-            checkWhere ? ( //se sim checkWhere
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 200, hide: 300 }}
-                overlay={
-                  <Tooltip id="button-tooltip">
-                    Voltar a selecionar?
-                  </Tooltip>
-                }
-              >
-                <button className={styles.buttons} type='button'>
-                  <FaBan
-                    className={styles.buttonIcon}
-                    size={'1.25rem'}
-                    //@ts-ignore
-                    onClick={() => setCheckWhere(checkFrom => !checkFrom)}
-                  />
-                </button>
-              </OverlayTrigger>
-            ) : (//se nao checkWhere
-              <OverlayTrigger
-                placement="right"
-                delay={{ show: 200, hide: 300 }}
-                overlay={
-                  <Tooltip id="button-tooltip">
-                    {!checkFrom ? (
-                      'Confirme a Origem'
-                    ) : (
-                      destiny.lat === position.lat ? (
-                        'Selecione o Destino'
-                      ) : (
-                        'Confirmar'
-                      )                   
-                    )
-                  }
-                  </Tooltip>
-                }
-              >
-                <button
-                  className={checkFrom ? '' : styles.buttonsChecked}
-                  type='button'
-                  disabled={!checkFrom && destiny.lat !== position.lat}
-                >
-                  <FaCheck
-                    className={styles.buttonIcon}
-                    size={'1.25rem'}
-                    //@ts-ignore
-                    onClick={() => setCheckWhere(s => !s)}
-
-                  />
-                </button>
-              </OverlayTrigger>
-            )
+            <button
+              className={styles.buttons}
+              type='button'
+              disabled={!confirmedPosition.lat ? true : false}
+            >
+              <FaCheck
+                className={styles.buttonIcon}
+                size={'1.25rem'}
+              />
+            </button>
           ) : (
             <OverlayTrigger
-              placement="right"
-              delay={{ show: 200, hide: 300 }}
-              overlay={
-                <Tooltip id="button-tooltip">
-                  Selecione onde você está
-                </Tooltip>
-              }
-            >
-              <button className={styles.buttons} type='button'>
-                <FaQuestion
-                  className={styles.buttonIcon}
-                  size={'1.25rem'}
-                />
-              </button>
-            </OverlayTrigger>
+                  placement="right"
+                  delay={{ show: 200, hide: 300 }}
+                  overlay={
+                    <Tooltip id="button-tooltip">
+                      dsa
+                    </Tooltip>
+                  }
+                >
+                  <button className={styles.buttons} type='button'>
+                    <FaQuestion
+                      className={styles.buttonIcon}
+                      size={'1.25rem'}
+                    />
+                  </button>
+                </OverlayTrigger>
           )}
 
         </p>

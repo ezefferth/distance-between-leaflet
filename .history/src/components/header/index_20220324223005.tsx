@@ -160,7 +160,7 @@ export function Header() {
                 <button
                   className={checkFrom ? '' : styles.buttonsChecked}
                   type='button'
-                  disabled={!checkFrom && destiny.lat !== position.lat}
+                  disabled={!checkFrom && destiny.lat === position.lat}
                 >
                   <FaCheck
                     className={styles.buttonIcon}

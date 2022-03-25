@@ -130,7 +130,7 @@ export function Dropdown2() {
         })}
 
       </ul>   {/* se city existir */}
-      <button onClick={() => console.log('position', position)}>teste</button>
+      <button onClick={() => console.log('position', checkFrom)}>teste</button>
     </div>
   )
 }

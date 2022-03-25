@@ -78,8 +78,8 @@ export default function Map() {
     }
     else if (!checkFrom) {
       setPosition(confirmedPosition);
-/*       setDestiny({ lat: 0, lng: 0 });
-      setConfirmedDestiny({ lat: 0, lng: 0 }); */
+      setDestiny({ lat: 0, lng: 0 });
+      setConfirmedDestiny({ lat: 0, lng: 0 });
       setCheckWhere(false);
     }
   }, [checkFrom]);

@@ -45,8 +45,7 @@ export default function Map() {
     confirmedPosition,
     checkWhere,
     setConfirmedDestiny,
-    confirmedDestiny,
-    setCheckWhere
+    confirmedDestiny
 
 
   } = useData();
@@ -69,29 +68,22 @@ export default function Map() {
   }
 
   useEffect(() => {
-
     if (checkFrom) {//se for true
       setConfirmedPosition(position);
-      
-      
-
     }
     else if (!checkFrom) {
-      setPosition(confirmedPosition);
-/*       setDestiny({ lat: 0, lng: 0 });
-      setConfirmedDestiny({ lat: 0, lng: 0 }); */
-      setCheckWhere(false);
+      setPosition(confirmedPosition)
     }
   }, [checkFrom]);
 
   useEffect(() => {
-    if (checkWhere && checkFrom) {//se for true
-      setConfirmedDestiny(destiny);
+    if (checkWhere) {//se for true
+      setConfirmedDestiny(position);
     }
-    else if (!checkWhere && !checkFrom) {
+    else if (!checkWhere) {
       setDestiny(confirmedDestiny)
     }
-  }, [checkWhere]);
+  }, [checkWhere, destiny]);
 
 
 
@@ -146,22 +138,18 @@ export default function Map() {
         }
 
         {
-          destiny.lat !== 0 && checkFrom && checkWhere ? (
+          destiny.lat && checkFrom && checkWhere ? (
             <Marker
               position={[confirmedDestiny.lat, confirmedDestiny.lng]}
             >
               <Popup>Destino</Popup>
             </Marker>
           ) : (
-
-            destiny.lat !== 0 && (
-              <Marker
-                position={[destiny.lat, destiny.lng]}
-              >
-                <Popup>Destino</Popup>
-              </Marker>
-            )
-
+            <Marker
+              position={[destiny.lat, destiny.lng]}
+            >
+              <Popup>DestinoO</Popup>
+            </Marker>
           )
         }
         <FlyTo />
